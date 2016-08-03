@@ -1,91 +1,99 @@
-import React from 'react'
+'use strict';
 
-const InfiniteScrollSpinner = () => {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-    let style = {
-      width: '100%',
-      fontSize: 12,
-      textAlign: 'center',
-      padding: '0 0 10px 0'
-    }
+var _react = require('react');
 
-    return <div style={style}>Loading ...</div>
-}
+var _react2 = _interopRequireDefault(_react);
 
-const InfiniteScrollReloader = () => {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-    let style = {
-      width: '100%',
-      fontSize: 12,
-      textAlign: 'center',
-      cursor: 'pointer',
-      padding: '10px 0'
-    }
+var InfiniteScrollSpinner = function InfiniteScrollSpinner() {
 
-    return (
-      <div style={style}>
-        Error loading data, click to try again
-      </div>
-    )
-}
+  var style = {
+    width: '100%',
+    fontSize: 12,
+    textAlign: 'center',
+    padding: '0 0 10px 0'
+  };
 
-const InfiniteScroll = (props) => {
+  return _react2.default.createElement(
+    'div',
+    { style: style },
+    'Loading ...'
+  );
+};
 
-  let {
-    height,
-    items,
-    loadMore,
-    hasMore,
-    loading,
-    error,
-    spinner,
-    reloader
-  } = props
+var InfiniteScrollReloader = function InfiniteScrollReloader() {
 
-  const style = {
+  var style = {
+    width: '100%',
+    fontSize: 12,
+    textAlign: 'center',
+    cursor: 'pointer',
+    padding: '10px 0'
+  };
+
+  return _react2.default.createElement(
+    'div',
+    { style: style },
+    'Error loading data, click to try again'
+  );
+};
+
+var InfiniteScroll = function InfiniteScroll(props) {
+  var height = props.height;
+  var items = props.items;
+  var loadMore = props.loadMore;
+  var hasMore = props.hasMore;
+  var loading = props.loading;
+  var error = props.error;
+  var spinner = props.spinner;
+  var reloader = props.reloader;
+
+
+  var style = {
     div: {
       overflowX: 'hidden',
       overflowY: 'auto',
       WebkitOverflowScrolling: 'touch',
-      height
+      height: height
     }
-  }
+  };
 
-  let customReloader = reloader ? reloader : <InfiniteScrollReloader />
+  var customReloader = reloader ? reloader : _react2.default.createElement(InfiniteScrollReloader, null);
 
-  let customSpinner = spinner ? spinner : <InfiniteScrollSpinner />
-  let displaySpinner = hasMore ? true : false
+  var customSpinner = spinner ? spinner : _react2.default.createElement(InfiniteScrollSpinner, null);
+  var displaySpinner = hasMore ? true : false;
 
-  const loadMoreElements = (e) => {
+  var loadMoreElements = function loadMoreElements(e) {
 
-    let componentHeight = e.target.scrollHeight - 1
-    let currentPosition = style.div.height + e.target.scrollTop
+    var componentHeight = e.target.scrollHeight - 1;
+    var currentPosition = style.div.height + e.target.scrollTop;
 
-    if (currentPosition >= componentHeight
-      && hasMore == true
-      && loading == false
-      && error == false) {
-        setTimeout( () => {
-          loadMore()
-        }, 500)
+    if (currentPosition >= componentHeight && hasMore == true && loading == false && error == false) {
+      setTimeout(function () {
+        loadMore();
+      }, 500);
     }
-  }
+  };
 
-  const tryAgain = () => {
-    loadMore()
-  }
+  var tryAgain = function tryAgain() {
+    loadMore();
+  };
 
-  return (
-    <div style={style.div} onScroll={loadMoreElements}>
-        {items}
-        {error ?
-          <div onClick={tryAgain}>{customReloader}</div>
-          : displaySpinner ?
-            customSpinner
-            : null
-        }
-    </div>
-  )
-}
+  return _react2.default.createElement(
+    'div',
+    { style: style.div, onScroll: loadMoreElements },
+    items,
+    error ? _react2.default.createElement(
+      'div',
+      { onClick: tryAgain },
+      customReloader
+    ) : displaySpinner ? customSpinner : null
+  );
+};
 
-export default InfiniteScroll
+exports.default = InfiniteScroll;
