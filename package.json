@@ -1,0 +1,27 @@
+{
+  "name": "react-stateless-infinite-scroll",
+  "version": "1.0.0",
+  "description": "The real react infinite scroll component",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xeonys/react-stateless-infinite-scroll.git"
+  },
+  "keywords": [
+    "xeonys",
+    "react",
+    "redux",
+    "stateless",
+    "infinite",
+    "scroll"
+  ],
+  "author": "Florian Bonniec",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xeonys/react-stateless-infinite-scroll/issues"
+  },
+  "homepage": "https://github.com/xeonys/react-stateless-infinite-scroll#readme"
+}
