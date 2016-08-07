@@ -52,7 +52,11 @@ var InfiniteScroll = function InfiniteScroll(props) {
   var error = props.error;
   var spinner = props.spinner;
   var reloader = props.reloader;
+  var threshold = props.threshold;
 
+
+  height = height ? height : '100%';
+  threshold = threshold ? threshold : 0;
 
   var style = {
     div: {
@@ -70,13 +74,11 @@ var InfiniteScroll = function InfiniteScroll(props) {
 
   var loadMoreElements = function loadMoreElements(e) {
 
-    var componentHeight = e.target.scrollHeight - 1;
-    var currentPosition = style.div.height + e.target.scrollTop;
+    var componentHeight = e.target.scrollHeight - threshold - 1;
+    var currentPosition = e.target.offsetHeight + e.target.scrollTop;
 
     if (currentPosition >= componentHeight && hasMore == true && loading == false && error == false) {
-      setTimeout(function () {
-        loadMore();
-      }, 500);
+      loadMore();
     }
   };
 

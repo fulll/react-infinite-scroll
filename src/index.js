@@ -39,8 +39,12 @@ const InfiniteScroll = (props) => {
     loading,
     error,
     spinner,
-    reloader
+    reloader,
+    threshold,
   } = props
+
+  height = height ? height : '100%'
+  threshold = threshold ? threshold : 0
 
   const style = {
     div: {
@@ -58,16 +62,14 @@ const InfiniteScroll = (props) => {
 
   const loadMoreElements = (e) => {
 
-    let componentHeight = e.target.scrollHeight - 1
-    let currentPosition = style.div.height + e.target.scrollTop
+    let componentHeight = e.target.scrollHeight - threshold - 1
+    let currentPosition = e.target.offsetHeight + e.target.scrollTop
 
     if (currentPosition >= componentHeight
       && hasMore == true
       && loading == false
       && error == false) {
-        setTimeout( () => {
-          loadMore()
-        }, 500)
+        loadMore()
     }
   }
 
