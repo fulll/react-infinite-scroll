@@ -78,4 +78,16 @@ const InfiniteScroll = (props) => {
   )
 }
 
+InfiniteScroll.propTypes = {
+  height: React.PropTypes.oneOf([React.PropTypes.number, React.PropTypes.string]),
+  threshold: React.PropTypes.number,
+  items: React.PropTypes.node,
+  loadMore: React.PropTypes.func.isRequired,
+  loading: React.PropTypes.bool.isRequired,
+  error: React.PropTypes.bool.isRequired,
+  spinner: React.PropTypes.node,
+  hasMore: React.PropTypes.bool.isRequired,
+  reloader: React.PropTypes.node,
+}
+
 export default InfiniteScroll
