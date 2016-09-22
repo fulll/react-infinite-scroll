@@ -1,6 +1,6 @@
 {
   "name": "react-stateless-infinite-scroll",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "The real react infinite scroll component",
   "main": "index.js",
   "scripts": {
