@@ -14,7 +14,7 @@ npm install -S react-stateless-infinite-scroll
 
 ```jsx
 import React from 'react'
-import Input from 'react-stateless-infinite-scroll'
+import InfiniteScroll from 'react-stateless-infinite-scroll'
 
 const Scroll = (someProps) => {
 
@@ -42,7 +42,7 @@ const Scroll = (someProps) => {
 
 ```jsx
 import React from 'react'
-import Input from 'react-stateless-infinite-scroll'
+import InfiniteScroll from 'react-stateless-infinite-scroll'
 
 const Scroll = (someProps) => {
 
