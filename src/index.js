@@ -28,48 +28,51 @@ const InfiniteScrollReloader = () => {
 }
 
 const InfiniteScroll = (props) => {
-  let { height, threshold } = props
-
   const {
     children,
-    loadMore,
-    loading,
-    spinner,
-    error,
-    hasMore,
-    reloader } = props
+    actions,
+    state,
+    customs,
+    options } = props
 
-  height = height || '100%'
-  threshold = threshold || 0
+  let { style } = props
 
-  const style = {
+  let threshold = 0
+  if (options) {
+    if (options.threshold) threshold = options.threshold
+  }
+
+  style = {
     div: {
+      height: '100%',
+      ...style,
       overflowX: 'hidden',
       overflowY: 'auto',
       WebkitOverflowScrolling: 'touch',
-      height,
     },
   }
 
-  const customReloader = reloader || <InfiniteScrollReloader />
+  let customReloader = <InfiniteScrollReloader />
+  let customSpinner = <InfiniteScrollSpinner />
 
-  const customSpinner = spinner || <InfiniteScrollSpinner />
-  const displaySpinner = hasMore
+  if (customs) {
+    if (customs.reloader) customReloader = customs.reloader
+    if (customs.spinner) customSpinner = customs.spinner
+  }
+
+  const displaySpinner = state.hasMore
 
   const loadMoreElements = (e) => {
     const componentHeight = e.target.scrollHeight - threshold - 1
     const currentPosition = e.target.offsetHeight + e.target.scrollTop
 
-    if (currentPosition >= componentHeight
-      && hasMore
-      && loading === false
-      && error === false) {
-      loadMore()
-    }
-  }
+    const loadMore =
+      currentPosition >= componentHeight
+      && state.hasMore
+      && !state.loading
+      && !state.error
 
-  const tryAgain = () => {
-    loadMore()
+    if (loadMore) actions.loadMore()
   }
 
   const showSpinner = displaySpinner ? customSpinner : null
@@ -77,8 +80,8 @@ const InfiniteScroll = (props) => {
   return (
     <div style={style.div} onScroll={loadMoreElements}>
       {children}
-      {error ?
-        <div onClick={tryAgain}>{customReloader}</div>
+      {state.error ?
+        <div onClick={actions.loadMore}>{customReloader}</div>
         : showSpinner
       }
     </div>
@@ -86,17 +89,23 @@ const InfiniteScroll = (props) => {
 }
 
 InfiniteScroll.propTypes = {
-  height: React.PropTypes.oneOf([
-    React.PropTypes.number, React.PropTypes.string,
-  ]),
-  threshold: React.PropTypes.number,
   children: React.PropTypes.node,
-  loadMore: React.PropTypes.func.isRequired,
-  hasMore: React.PropTypes.bool.isRequired,
-  loading: React.PropTypes.bool.isRequired,
-  error: React.PropTypes.bool.isRequired,
-  spinner: React.PropTypes.node,
-  reloader: React.PropTypes.node,
+  style: React.PropTypes.shape({}),
+  options: React.PropTypes.shape({
+    threshold: React.PropTypes.number,
+  }),
+  actions: React.PropTypes.shape({
+    loadMore: React.PropTypes.func.isRequired,
+  }).isRequired,
+  state: React.PropTypes.shape({
+    hasMore: React.PropTypes.bool.isRequired,
+    loading: React.PropTypes.bool.isRequired,
+    error: React.PropTypes.bool.isRequired,
+  }).isRequired,
+  customs: React.PropTypes.shape({
+    spinner: React.PropTypes.node,
+    reloader: React.PropTypes.node,
+  }),
 }
 
 export default InfiniteScroll
