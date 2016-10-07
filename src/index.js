@@ -30,7 +30,7 @@ const InfiniteScrollReloader = () => {
 const InfiniteScroll = (props) => {
   let { height, threshold } = props
 
-  const { items, loadMore, loading, spinner, error, hasMore, reloader } = props
+  const { children, loadMore, loading, spinner, error, hasMore, reloader } = props
 
   height = height || '100%'
   threshold = threshold || 0
@@ -69,7 +69,7 @@ const InfiniteScroll = (props) => {
 
   return (
     <div style={style.div} onScroll={loadMoreElements}>
-      {items}
+      {children}
       {error ?
         <div onClick={tryAgain}>{customReloader}</div>
         : showSpinner
