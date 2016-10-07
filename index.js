@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -42,45 +44,46 @@ var InfiniteScrollReloader = function InfiniteScrollReloader() {
 };
 
 var InfiniteScroll = function InfiniteScroll(props) {
-  var height = props.height;
-  var threshold = props.threshold;
-  var items = props.items;
-  var loadMore = props.loadMore;
-  var loading = props.loading;
-  var spinner = props.spinner;
-  var error = props.error;
-  var hasMore = props.hasMore;
-  var reloader = props.reloader;
+  var children = props.children;
+  var actions = props.actions;
+  var state = props.state;
+  var customs = props.customs;
+  var options = props.options;
+  var style = props.style;
 
 
-  height = height || '100%';
-  threshold = threshold || 0;
+  var threshold = 0;
+  if (options) {
+    if (options.threshold) threshold = options.threshold;
+  }
 
-  var style = {
-    div: {
+  style = {
+    div: _extends({
+      height: '100%'
+    }, style, {
       overflowX: 'hidden',
       overflowY: 'auto',
-      WebkitOverflowScrolling: 'touch',
-      height: height
-    }
+      WebkitOverflowScrolling: 'touch'
+    })
   };
 
-  var customReloader = reloader || _react2.default.createElement(InfiniteScrollReloader, null);
+  var customReloader = _react2.default.createElement(InfiniteScrollReloader, null);
+  var customSpinner = _react2.default.createElement(InfiniteScrollSpinner, null);
 
-  var customSpinner = spinner || _react2.default.createElement(InfiniteScrollSpinner, null);
-  var displaySpinner = hasMore;
+  if (customs) {
+    if (customs.reloader) customReloader = customs.reloader;
+    if (customs.spinner) customSpinner = customs.spinner;
+  }
+
+  var displaySpinner = state.hasMore;
 
   var loadMoreElements = function loadMoreElements(e) {
     var componentHeight = e.target.scrollHeight - threshold - 1;
     var currentPosition = e.target.offsetHeight + e.target.scrollTop;
 
-    if (currentPosition >= componentHeight && hasMore && loading === false && error === false) {
-      loadMore();
-    }
-  };
+    var loadMore = currentPosition >= componentHeight && state.hasMore && !state.loading && !state.error;
 
-  var tryAgain = function tryAgain() {
-    loadMore();
+    if (loadMore) actions.loadMore();
   };
 
   var showSpinner = displaySpinner ? customSpinner : null;
@@ -88,24 +91,33 @@ var InfiniteScroll = function InfiniteScroll(props) {
   return _react2.default.createElement(
     'div',
     { style: style.div, onScroll: loadMoreElements },
-    items,
-    error ? _react2.default.createElement(
+    children,
+    state.error ? _react2.default.createElement(
       'div',
-      { onClick: tryAgain },
+      { onClick: actions.loadMore },
       customReloader
     ) : showSpinner
   );
 };
 
 InfiniteScroll.propTypes = {
-  height: _react2.default.PropTypes.oneOf([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-  threshold: _react2.default.PropTypes.number,
-  items: _react2.default.PropTypes.node,
-  loadMore: _react2.default.PropTypes.func.isRequired,
-  loading: _react2.default.PropTypes.bool.isRequired,
-  error: _react2.default.PropTypes.bool.isRequired,
-  spinner: _react2.default.PropTypes.node,
-  reloader: _react2.default.PropTypes.node
+  children: _react2.default.PropTypes.node,
+  style: _react2.default.PropTypes.shape({}),
+  options: _react2.default.PropTypes.shape({
+    threshold: _react2.default.PropTypes.number
+  }),
+  actions: _react2.default.PropTypes.shape({
+    loadMore: _react2.default.PropTypes.func.isRequired
+  }).isRequired,
+  state: _react2.default.PropTypes.shape({
+    hasMore: _react2.default.PropTypes.bool.isRequired,
+    loading: _react2.default.PropTypes.bool.isRequired,
+    error: _react2.default.PropTypes.bool.isRequired
+  }).isRequired,
+  customs: _react2.default.PropTypes.shape({
+    spinner: _react2.default.PropTypes.node,
+    reloader: _react2.default.PropTypes.node
+  })
 };
 
 exports.default = InfiniteScroll;
