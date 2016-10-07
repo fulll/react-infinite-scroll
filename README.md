@@ -2,82 +2,81 @@
 
 ## react-stateless-infinite-scroll
 
-The real react infinite scroll component
+The best react infinite scroll component, on earth 🌍
 
 ### Usage
 
-##### Sample
+##### Install
 
 ```
 npm install -S react-stateless-infinite-scroll
 ```
 
-###### Use in parent div
+##### How to
 
 ```jsx
 import React from 'react'
 import InfiniteScroll from 'react-stateless-infinite-scroll'
 
-const Scroll = (someProps) => {
+const Component = (props) => {
 
-   const style = {
-     height: 100
-   }
+  const infiniteActions = {
+    loadMore,
+  }
 
-   return (
-    <div style={style.div}>
-      <InfiniteScroll
-            items={Component}
-            loadMore={function}
-            hasMore={bool}
-            loading={bool}
-            spinner={Component}
-            error={bool}
-            reloader={Component}
-      />
-    </div>
+  const infiniteState = {
+    hasMore,
+    loading,
+    error,
+  }
+
+  const infiniteCustoms = {
+    spinner: <CustomSpinner />,
+    reloader: <CustomReloader />,
+  }
+
+  const infiniteOptions = {
+    threshold: 100,
+  }
+
+  const infiniteStyle = {
+    height: 300,
+  }
+
+  return (
+    <InfiniteScroll
+      actions={infiniteActions}
+      state={infiniteState}
+      customs={infiniteCustoms}
+      options={infiniteOptions}
+      style={infiniteStyle}
+    >
+     {items.map((item, index) => <Item item={item} key={index} />)}
+    </InfiniteScroll>
   )
 }
 ```
 
-###### Use without parent
+##### PropTypes
 
 ```jsx
-import React from 'react'
-import InfiniteScroll from 'react-stateless-infinite-scroll'
-
-const Scroll = (someProps) => {
-
-   const style = {
-     height: 100
-   }
-
-   return (
-     <InfiniteScroll
-           height={style.height}
-           items={Component}
-           loadMore={function}
-           hasMore={bool}
-           loading={bool}
-           spinner={Component}
-           error={bool}
-           reloader={Component}
-     />
-  )
-}
+  InfiniteScroll.propTypes = {
+    children: React.PropTypes.node,
+    style: React.PropTypes.shape({}),
+    options: React.PropTypes.shape({
+      threshold: React.PropTypes.number,
+    }),
+    actions: React.PropTypes.shape({
+      loadMore: React.PropTypes.func.isRequired,
+    }).isRequired,
+    state: React.PropTypes.shape({
+      hasMore: React.PropTypes.bool.isRequired,
+      loading: React.PropTypes.bool.isRequired,
+      error: React.PropTypes.bool.isRequired,
+    }).isRequired,
+    customs: React.PropTypes.shape({
+      spinner: React.PropTypes.node,
+      reloader: React.PropTypes.node,
+    }),
+  }
 ```
-
-##### Required
-
-- items: __Component__, list of items to display
-- loadMore: __function__, function will be called if InfiniteScroll bottom is reached
-- threshold: __int__, set custom threshold to call loadmore function, by default function will be called when user reach bottom
-- hasMore: __bool__, boolean indicate if there is more items to load
-- loading: __bool__, boolean indicate if data is loading
-- error: __bool__, boolean indicate if an error occurs, if true reloader component will be displayed
-
-##### Optional
-
-- height: __int__ or __string__, by default InfiniteScroll use '100%' of parent component
-- spinner: __Custom Spinner component__, use your own spinner
-- reloader: __Custom Reloader component__, use your own reloader
