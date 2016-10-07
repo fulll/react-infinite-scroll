@@ -30,7 +30,14 @@ const InfiniteScrollReloader = () => {
 const InfiniteScroll = (props) => {
   let { height, threshold } = props
 
-  const { children, loadMore, loading, spinner, error, hasMore, reloader } = props
+  const {
+    children,
+    loadMore,
+    loading,
+    spinner,
+    error,
+    hasMore,
+    reloader } = props
 
   height = height || '100%'
   threshold = threshold || 0
@@ -79,10 +86,13 @@ const InfiniteScroll = (props) => {
 }
 
 InfiniteScroll.propTypes = {
-  height: React.PropTypes.oneOf([React.PropTypes.number, React.PropTypes.string]),
+  height: React.PropTypes.oneOf([
+    React.PropTypes.number, React.PropTypes.string,
+  ]),
   threshold: React.PropTypes.number,
-  items: React.PropTypes.node,
+  children: React.PropTypes.node,
   loadMore: React.PropTypes.func.isRequired,
+  hasMore: React.PropTypes.bool.isRequired,
   loading: React.PropTypes.bool.isRequired,
   error: React.PropTypes.bool.isRequired,
   spinner: React.PropTypes.node,
