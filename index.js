@@ -75,7 +75,7 @@ var InfiniteScroll = function InfiniteScroll(props) {
     if (customs.spinner) customSpinner = customs.spinner;
   }
 
-  var displaySpinner = state.hasMore;
+  var displaySpinner = state.loading;
 
   var loadMoreElements = function loadMoreElements(e) {
     var componentHeight = e.target.scrollHeight - threshold - 1;
