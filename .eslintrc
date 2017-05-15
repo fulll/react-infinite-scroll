@@ -13,7 +13,7 @@
   "rules": {
     "semi": ["error", "never"],
     "max-len": ["error", 80],
-    "max-lines": ["error", {"max": 100, "skipBlankLines": true, "skipComments": true}],
+    "max-lines": ["error", {"skipBlankLines": true, "skipComments": true}],
     "arrow-parens": 0,
     "no-unused-expressions": ["error", { "allowTernary": true }],
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
