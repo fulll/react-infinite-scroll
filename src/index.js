@@ -98,7 +98,7 @@ class InfiniteScroll extends React.Component {
       >
         {children}
         {state.error ?
-          <div onClick={actions.loadMore}><CustomReloader />}</div>
+          <div onClick={actions.loadMore}><CustomReloader /></div>
           : this.state.displaySpinner ? <CustomSpinner /> : null
         }
       </div>

@@ -133,8 +133,7 @@ var InfiniteScroll = function (_React$Component) {
         state.error ? _react2.default.createElement(
           'div',
           { onClick: actions.loadMore },
-          _react2.default.createElement(CustomReloader, null),
-          '}'
+          _react2.default.createElement(CustomReloader, null)
         ) : _this.state.displaySpinner ? _react2.default.createElement(CustomSpinner, null) : null
       );
     }, _temp), _possibleConstructorReturn(_this, _ret);
