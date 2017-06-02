@@ -27,8 +27,6 @@ const InfiniteScrollReloader = () => {
   )
 }
 
-const infiniteId = 'infinite-scroll'
-
 class InfiniteScroll extends React.Component {
   state = {
     displaySpinner: this.props.state.loading,
@@ -60,7 +58,7 @@ class InfiniteScroll extends React.Component {
   }
 
   loadMoreElements = e => {
-    if (e.target.id === infiniteId) {
+    if (e.target.id === this.props.infiniteId) {
       const { actions, state, options } = this.props
       let threshold = 0
       if (options && options.threshold) threshold = options.threshold
@@ -91,7 +89,7 @@ class InfiniteScroll extends React.Component {
     return (
       <div
         ref={ref => this.container = ref}
-        id={infiniteId}
+        id={this.props.infiniteId}
         style={this.getStyle()}
         onScroll={this.loadMoreElements}
         onWheel={this.showSpinner}
@@ -124,6 +122,11 @@ InfiniteScroll.propTypes = {
     spinner: React.PropTypes.func,
     reloader: React.PropTypes.func,
   }),
+  infiniteId: React.PropTypes.string,
+}
+
+InfiniteScroll.defaultProps = {
+  infiniteId: 'infinite-scroll'
 }
 
 export default InfiniteScroll
