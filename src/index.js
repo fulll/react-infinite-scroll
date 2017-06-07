@@ -1,4 +1,6 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react'
+import { v4 } from 'uuid'
 
 const InfiniteScrollSpinner = () => {
   const style = {
@@ -27,20 +29,12 @@ const InfiniteScrollReloader = () => {
   )
 }
 
-const infiniteId = 'infinite-scroll'
-
 class InfiniteScroll extends React.Component {
-  state = {
-    displaySpinner: this.props.state.loading,
-  }
-
-  componentWillReceiveProps = nP => {
-    if (nP.state.loading && !this.state.displaySpinner) {
-      this.setState({ displaySpinner: true })
-    } else if (!nP.state.loading
-      && this.state.displaySpinner && !nP.state.hasMore) {
-      this.setState({ displaySpinner: false })
-    }
+  shouldComponentUpdate = nP => {
+    if (nP.state.error !== this.props.state.error) return true
+    if (nP.state.hasMore !== this.props.state.hasMore) return true
+    if (JSON.stringify(nP.data) !== JSON.stringify(this.props.data)) return true
+    return false
   }
 
   getStyle = () => ({
@@ -51,16 +45,8 @@ class InfiniteScroll extends React.Component {
     WebkitOverflowScrolling: 'touch',
   })
 
-  showSpinner = e => {
-    if (!this.state.displaySpinner) {
-      if (e.deltaY > 0 && this.props.state.hasMore) {
-        this.setState({ displaySpinner: true })
-      }
-    }
-  }
-
   loadMoreElements = e => {
-    if (e.target.id === infiniteId) {
+    if (e.target.id === this.props.infiniteId) {
       const { actions, state, options } = this.props
       let threshold = 0
       if (options && options.threshold) threshold = options.threshold
@@ -70,44 +56,48 @@ class InfiniteScroll extends React.Component {
       const loadMore =
         currentPosition >= componentHeight
         && state.hasMore
-        && !state.loading
         && !state.error
 
-      if (loadMore) actions.loadMore()
+      if (loadMore) {
+        if (this.timeoutLoadMore) clearTimeout(this.timeoutLoadMore)
+        this.timeoutLoadMore = setTimeout(actions.loadMore, 200)
+      }
     }
   }
 
-  /* eslint-disable */
   render = () => {
-    const { children, actions, state, customs } = this.props
-    let CustomReloader = InfiniteScrollReloader
-    let CustomSpinner = InfiniteScrollSpinner
-
-    if (customs) {
-      if (customs.reloader) CustomReloader = customs.reloader
-      if (customs.spinner) CustomSpinner = customs.spinner
-    }
+    const { data, Row, Header, actions, state, customs } = this.props
+    const CustomReloader = customs.reloader
+    const CustomSpinner = customs.spinner
 
     return (
       <div
-        ref={ref => this.container = ref}
-        id={infiniteId}
+        ref={ref => { this.container = ref }}
+        id={this.props.infiniteId}
         style={this.getStyle()}
-        onScroll={this.loadMoreElements}
-        onWheel={this.showSpinner}
+        onScroll={(e) => { this.loadMoreElements(e) }}
       >
-        {children}
+        {Header && <Header />}
+        {data.map(props => <Row key={props.key} {...props} />)}
         {state.error ?
           <div onClick={actions.loadMore}><CustomReloader /></div>
-          : this.state.displaySpinner ? <CustomSpinner /> : null
-        }
+          : state.hasMore ? <CustomSpinner /> : null}
       </div>
     )
   }
 }
 
 InfiniteScroll.propTypes = {
-  children: React.PropTypes.node,
+  Header: React.PropTypes.func,
+  Row: React.PropTypes.func.isRequired,
+  data: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      key: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number,
+      ]).isRequired,
+    }),
+  ),
   style: React.PropTypes.shape({}),
   options: React.PropTypes.shape({
     threshold: React.PropTypes.number,
@@ -117,13 +107,22 @@ InfiniteScroll.propTypes = {
   }).isRequired,
   state: React.PropTypes.shape({
     hasMore: React.PropTypes.bool.isRequired,
-    loading: React.PropTypes.bool.isRequired,
     error: React.PropTypes.bool.isRequired,
   }).isRequired,
   customs: React.PropTypes.shape({
     spinner: React.PropTypes.func,
     reloader: React.PropTypes.func,
   }),
+  infiniteId: React.PropTypes.string,
+}
+
+InfiniteScroll.defaultProps = {
+  customs: {
+    spinner: InfiniteScrollSpinner,
+    reloader: InfiniteScrollReloader,
+  },
+  infiniteId: v4(),
+  data: [],
 }
 
 export default InfiniteScroll

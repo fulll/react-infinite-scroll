@@ -26,8 +26,9 @@
   },
   "homepage": "https://github.com/xeonys/react-stateless-infinite-scroll#readme",
   "dependencies": {
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0"
+    "react": "~15.4.0",
+    "react-dom": "~15.4.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.0.0",
