@@ -67,9 +67,8 @@ class InfiniteScroll extends React.Component {
 
   render = () => {
     const { data, Row, Header, actions, state, customs } = this.props
-    const CustomReloader = customs.reloader
-    const CustomSpinner = customs.spinner
-
+    const CustomReloader = customs.reloader || InfiniteScrollReloader
+    const CustomSpinner = customs.spinner || InfiniteScrollSpinner
     return (
       <div
         ref={ref => { this.container = ref }}

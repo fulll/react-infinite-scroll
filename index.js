@@ -107,9 +107,8 @@ var InfiniteScroll = function (_React$Component) {
           state = _this$props2.state,
           customs = _this$props2.customs;
 
-      var CustomReloader = customs.reloader;
-      var CustomSpinner = customs.spinner;
-
+      var CustomReloader = customs.reloader || InfiniteScrollReloader;
+      var CustomSpinner = customs.spinner || InfiniteScrollSpinner;
       return _react2.default.createElement(
         'div',
         {
