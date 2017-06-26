@@ -52,6 +52,10 @@ var InfiniteScrollReloader = function InfiniteScrollReloader() {
   );
 };
 
+var InfiniteScrollContainer = function InfiniteScrollContainer(props) {
+  return _react2.default.createElement('div', props);
+};
+
 var InfiniteScroll = function (_React$Component) {
   _inherits(InfiniteScroll, _React$Component);
 
@@ -107,10 +111,12 @@ var InfiniteScroll = function (_React$Component) {
           state = _this$props2.state,
           customs = _this$props2.customs;
 
-      var CustomReloader = customs.reloader || InfiniteScrollReloader;
-      var CustomSpinner = customs.spinner || InfiniteScrollSpinner;
+      var CustomReloader = customs.Reloader || InfiniteScrollReloader;
+      var CustomSpinner = customs.Spinner || InfiniteScrollSpinner;
+      var CustomContainer = customs.Container || InfiniteScrollContainer;
+
       return _react2.default.createElement(
-        'div',
+        CustomContainer,
         {
           ref: function ref(_ref2) {
             _this.container = _ref2;
@@ -155,16 +161,18 @@ InfiniteScroll.propTypes = {
     error: _react2.default.PropTypes.bool.isRequired
   }).isRequired,
   customs: _react2.default.PropTypes.shape({
-    spinner: _react2.default.PropTypes.func,
-    reloader: _react2.default.PropTypes.func
+    Container: _react2.default.PropTypes.func,
+    Spinner: _react2.default.PropTypes.func,
+    Reloader: _react2.default.PropTypes.func
   }),
   infiniteId: _react2.default.PropTypes.string
 };
 
 InfiniteScroll.defaultProps = {
   customs: {
-    spinner: InfiniteScrollSpinner,
-    reloader: InfiniteScrollReloader
+    Container: InfiniteScrollContainer,
+    Spinner: InfiniteScrollSpinner,
+    Reloader: InfiniteScrollReloader
   },
   infiniteId: (0, _uuid.v4)(),
   data: []

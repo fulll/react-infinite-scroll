@@ -29,6 +29,8 @@ const InfiniteScrollReloader = () => {
   )
 }
 
+const InfiniteScrollContainer = (props) => <div {...props} />
+
 class InfiniteScroll extends React.Component {
   shouldComponentUpdate = nP => {
     if (nP.state.error !== this.props.state.error) return true
@@ -67,11 +69,14 @@ class InfiniteScroll extends React.Component {
 
   render = () => {
     const { data, Row, Header, actions, state, customs } = this.props
-    const CustomReloader = customs.reloader || InfiniteScrollReloader
-    const CustomSpinner = customs.spinner || InfiniteScrollSpinner
+    const CustomReloader = customs.Reloader || InfiniteScrollReloader
+    const CustomSpinner = customs.Spinner || InfiniteScrollSpinner
+    const CustomContainer = customs.Container || InfiniteScrollContainer
+
     return (
-      <div
+      <CustomContainer
         ref={ref => { this.container = ref }}
+        innerRef={ref => { this.container = ref }}
         id={this.props.infiniteId}
         style={this.getStyle()}
         onScroll={(e) => { this.loadMoreElements(e) }}
@@ -81,7 +86,7 @@ class InfiniteScroll extends React.Component {
         {state.error ?
           <div onClick={actions.loadMore}><CustomReloader /></div>
           : state.hasMore ? <CustomSpinner /> : null}
-      </div>
+      </CustomContainer>
     )
   }
 }
@@ -109,16 +114,18 @@ InfiniteScroll.propTypes = {
     error: React.PropTypes.bool.isRequired,
   }).isRequired,
   customs: React.PropTypes.shape({
-    spinner: React.PropTypes.func,
-    reloader: React.PropTypes.func,
+    Container: React.PropTypes.func,
+    Spinner: React.PropTypes.func,
+    Reloader: React.PropTypes.func,
   }),
   infiniteId: React.PropTypes.string,
 }
 
 InfiniteScroll.defaultProps = {
   customs: {
-    spinner: InfiniteScrollSpinner,
-    reloader: InfiniteScrollReloader,
+    Container: InfiniteScrollContainer,
+    Spinner: InfiniteScrollSpinner,
+    Reloader: InfiniteScrollReloader,
   },
   infiniteId: v4(),
   data: [],
