@@ -1,6 +1,6 @@
 ### [Live](https://xeonys.github.io/react-showroom/#scroll)
 
-## react-stateless-infinite-scroll
+## @ied/react-infinite-scroll
 
 The best react infinite scroll component, on earth 🌍
 
@@ -9,14 +9,14 @@ The best react infinite scroll component, on earth 🌍
 ##### Install
 
 ```
-npm install -S react-stateless-infinite-scroll
+yarn add @ied/react-infinite-scroll
 ```
 
 ##### How to
 
 ```jsx
 import React from 'react'
-import InfiniteScroll from 'react-stateless-infinite-scroll'
+import InfiniteScroll from '@ied/react-infinite-scroll'
 
 const Component = (props) => {
 
