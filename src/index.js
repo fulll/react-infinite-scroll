@@ -1,4 +1,5 @@
 /* eslint-disable no-nested-ternary */
+import PropTypes from 'prop-types'
 import React from 'react'
 import { v4 } from 'uuid'
 
@@ -92,36 +93,39 @@ class InfiniteScroll extends React.Component {
 }
 
 InfiniteScroll.propTypes = {
-  Header: React.PropTypes.func,
-  Row: React.PropTypes.func.isRequired,
-  data: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      key: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.number,
+  Header: PropTypes.func,
+  Row: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
       ]).isRequired,
     }),
   ),
-  style: React.PropTypes.shape({}),
-  options: React.PropTypes.shape({
-    threshold: React.PropTypes.number,
+  style: PropTypes.shape({}),
+  options: PropTypes.shape({
+    threshold: PropTypes.number,
   }),
-  actions: React.PropTypes.shape({
-    loadMore: React.PropTypes.func.isRequired,
+  actions: PropTypes.shape({
+    loadMore: PropTypes.func.isRequired,
   }).isRequired,
-  state: React.PropTypes.shape({
-    hasMore: React.PropTypes.bool.isRequired,
-    error: React.PropTypes.bool.isRequired,
+  state: PropTypes.shape({
+    hasMore: PropTypes.bool.isRequired,
+    error: PropTypes.bool.isRequired,
   }).isRequired,
-  customs: React.PropTypes.shape({
-    Container: React.PropTypes.func,
-    Spinner: React.PropTypes.func,
-    Reloader: React.PropTypes.func,
+  customs: PropTypes.shape({
+    Container: PropTypes.func,
+    Spinner: PropTypes.func,
+    Reloader: PropTypes.func,
   }),
-  infiniteId: React.PropTypes.string,
+  infiniteId: PropTypes.string,
 }
 
 InfiniteScroll.defaultProps = {
+  Header: undefined,
+  style: undefined,
+  options: undefined,
   customs: {
     Container: InfiniteScrollContainer,
     Spinner: InfiniteScrollSpinner,

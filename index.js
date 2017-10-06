@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -121,6 +125,9 @@ var InfiniteScroll = function (_React$Component) {
           ref: function ref(_ref2) {
             _this.container = _ref2;
           },
+          innerRef: function innerRef(ref) {
+            _this.container = ref;
+          },
           id: _this.props.infiniteId,
           style: _this.getStyle(),
           onScroll: function onScroll(e) {
@@ -144,31 +151,34 @@ var InfiniteScroll = function (_React$Component) {
 }(_react2.default.Component);
 
 InfiniteScroll.propTypes = {
-  Header: _react2.default.PropTypes.func,
-  Row: _react2.default.PropTypes.func.isRequired,
-  data: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
-    key: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.number]).isRequired
+  Header: _propTypes2.default.func,
+  Row: _propTypes2.default.func.isRequired,
+  data: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+    key: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]).isRequired
   })),
-  style: _react2.default.PropTypes.shape({}),
-  options: _react2.default.PropTypes.shape({
-    threshold: _react2.default.PropTypes.number
+  style: _propTypes2.default.shape({}),
+  options: _propTypes2.default.shape({
+    threshold: _propTypes2.default.number
   }),
-  actions: _react2.default.PropTypes.shape({
-    loadMore: _react2.default.PropTypes.func.isRequired
+  actions: _propTypes2.default.shape({
+    loadMore: _propTypes2.default.func.isRequired
   }).isRequired,
-  state: _react2.default.PropTypes.shape({
-    hasMore: _react2.default.PropTypes.bool.isRequired,
-    error: _react2.default.PropTypes.bool.isRequired
+  state: _propTypes2.default.shape({
+    hasMore: _propTypes2.default.bool.isRequired,
+    error: _propTypes2.default.bool.isRequired
   }).isRequired,
-  customs: _react2.default.PropTypes.shape({
-    Container: _react2.default.PropTypes.func,
-    Spinner: _react2.default.PropTypes.func,
-    Reloader: _react2.default.PropTypes.func
+  customs: _propTypes2.default.shape({
+    Container: _propTypes2.default.func,
+    Spinner: _propTypes2.default.func,
+    Reloader: _propTypes2.default.func
   }),
-  infiniteId: _react2.default.PropTypes.string
+  infiniteId: _propTypes2.default.string
 };
 
 InfiniteScroll.defaultProps = {
+  Header: undefined,
+  style: undefined,
+  options: undefined,
   customs: {
     Container: InfiniteScrollContainer,
     Spinner: InfiniteScrollSpinner,
