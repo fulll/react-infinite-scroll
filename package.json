@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./src",
-    "build": "babel src --out-file index.js"
+    "build": "rm -rf dist && webpack --config webpack.config.prod.js"
   },
   "repository": {
     "type": "git",
@@ -25,13 +25,15 @@
   },
   "homepage": "https://github.com/xeonys/react-stateless-infinite-scroll#readme",
   "dependencies": {
+    "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
+    "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
@@ -41,6 +43,6 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
-    "prop-types": "^15.6.0"
+    "webpack": "^3.6.0"
   }
 }

@@ -26,7 +26,6 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/require-extension": 0,
     "react/no-unused-prop-types": [1, { "skipShapeProps": true }],
-    "babel/arrow-parens": 1,
     "jsx-a11y/no-static-element-interactions": 0
   }
 }
