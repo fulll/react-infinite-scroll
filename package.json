@@ -1,6 +1,6 @@
 {
   "name": "@ied/react-infinite-scroll",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "The real react infinite scroll component",
   "main": "dist/react-infinite-scroll.min.js",
   "scripts": {
